@@ -1,0 +1,22 @@
+# Use this file to create a conda environment for this project. See the
+# comments below for some useful conda commands.
+#
+# Create the environment ....... conda env create --file environment.yml
+# Activate the environment ..... conda activate beemer
+# Deactivate the environment ... conda deactivate
+# Remove the environment ....... conda env remove --name beemer
+
+name: beemer
+
+dependencies:
+  - python=3.10
+  - fastapi
+  - httpx
+  - ipython
+  - uvicorn[standard]
+  - pip
+  - pip:
+    - caproto
+    - ipdb
+    - ruff
+    - --editable .
