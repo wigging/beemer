@@ -1,12 +1,14 @@
 """
-Web client for interacting with the web server. Requires the IOC server and
-web server to already be running.
+An HTTP client to communicate with a HTTP server.
+
+This requires the HTTP server to already be running. See the
+beemer/http_server module to run the server.
 """
 
 import httpx
 
 
-class WebClient:
+class HttpClient:
     def __init__(self, url) -> None:
         self.url = url
 

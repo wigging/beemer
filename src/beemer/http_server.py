@@ -1,14 +1,16 @@
 """
-Web server using uvicorn and API built with fastapi. Requires the IOC server
-to already be running.
+An HTTP server that uses a CA client to communicate with a CA server.
+
+This requires the CA server to already be running. See the beemer/ca_servers
+directory for examples of channel access servers.
 """
 
 import uvicorn
 from fastapi import FastAPI
-from .ioc_client import IocClient
+from .ca_client import CaClient
 
 app = FastAPI()
-client = IocClient()
+client = CaClient()
 
 
 @app.get("/")
@@ -23,4 +25,4 @@ def read_pv_values(pvs: str):
 
 
 if __name__ == "__main__":
-    uvicorn.run("beemer.web_server:app")
+    uvicorn.run("beemer.http_server:app")
