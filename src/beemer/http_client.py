@@ -12,6 +12,13 @@ class HttpClient:
     def __init__(self, url) -> None:
         self.url = url
 
+    def get_status(self) -> int:
+        """
+        Get status code.
+        """
+        response = httpx.get(self.url)
+        return response.status_code
+
     def get_pv_values(self, *pvs: str) -> dict[str, object]:
         """
         Get values from PVs.
