@@ -1,23 +1,40 @@
 """
-Example of using the CaClient to get PV values. Requires the simple IOC server
-to be running. Follow steps below to run this example.
+A simple IOC server built with caproto.
 
-1) Run the IOC server with `python -m beemer.ca_servers.simple`
-2) Run this example with `python simple_ioc.py`
+This is based on the caproto example at
+https://github.com/caproto/caproto/blob/master/caproto/ioc_examples/simple.py
 """
 
-from beemer import CaClient
+from caproto.server import PVGroup, ioc_arg_parser, pvproperty, run
+
+
+class SimpleIOC(PVGroup):
+    """
+    A simple IOC with three uncoupled read/writable PVs.
+
+    Attributes
+    ----------
+    A : pvproperty
+        PV representing an integer.
+    B : pvproperty
+        PV representing a float.
+    C : pvproperty
+        PV as an array of integers, max length is 3.
+    """
+    A = pvproperty(value=1, doc="An integer")
+    B = pvproperty(value=2.0, doc="A float")
+    C = pvproperty(value=[1, 2, 3], doc="An array of integers (max length 3)")
 
 
 def main():
     """
-    Run this example.
+    Run this IOC server.
     """
-    client = CaClient()
-    values = client.get_pv_values("simple:A", "simple:B", "simple:C")
-
-    for key, value in values.items():
-        print(f"PV {key} value is {value}")
+    ioc_options, run_options = ioc_arg_parser(
+        desc="Simple IOC", default_prefix="simple:"
+    )
+    ioc = SimpleIOC(**ioc_options)
+    run(ioc.pvdb, **run_options)
 
 
 if __name__ == "__main__":
