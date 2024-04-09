@@ -1,11 +1,11 @@
 # Build a Docker image for EPICS Base
 # docker build -t epics .
 
-# Run a Docker container from the EPICS Base image
+# Run a Docker container from the EPICS Base image with interactive shell
 # docker run -it --rm epics /bin/ash
 
-# Run a Docker container from EPICS Base image and publish all exposed ports
-# docker run -it --rm -P epics
+# Run a Docker container from EPICS Base image and map ports to host
+# docker run -it --rm -p 5064:5064/tcp -p 5064:5064/udp -p 5065:5065/tcp -p 5065:5065/udp epics
 
 # See the EPICS docs for more info
 # https://docs.epics-controls.org/en/latest/index.html
@@ -29,7 +29,10 @@ ENV EPICS_BASE=/base-$epics_ver \
 
 COPY test.db .
 
-EXPOSE 5065/tcp 5064/tcp
-EXPOSE 5065/udp 5064/udp
+EXPOSE 5065/tcp
+EXPOSE 5064/tcp
+
+EXPOSE 5065/udp
+EXPOSE 5064/udp
 
 CMD ["softIoc", "-d", "test.db"]
