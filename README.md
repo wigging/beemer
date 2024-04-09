@@ -1,12 +1,44 @@
 # Beemer
 
-This project attempts to use an HTTP interface for communicating with a channel access (CA) server. The application is for an [EPICS](https://epics-controls.org) beamline network but it may be useful for other EPICS-based networks. The CA client and CA server components use the [caproto](https://github.com/caproto/caproto) package. The HTTP client uses the [httpx](https://www.python-httpx.org) package and the HTTP server uses the [fastapi](https://fastapi.tiangolo.com) package.
+Beemer is a Python package for working with process variables (PVs) from EPICS input/output controllers (IOCs). The PVs are exposed via the channel access (CA) protocol using the included EPICS Docker container or caproto's CA server. Examples of each approach are provided in this repository.
+
+## Installation
+
+Use conda to create a Python environment where beemer is installed in editable (developer) mode.
+
+```
+conda env create --file environment.yml
+conda activate beemer
+```
+
+## Examples
+
+The examples demonstrate two approaches of using beemer to access PVs. One approach uses softIoc from an EPICS Docker container as shown in the diagram below. See the `epics-base/Dockerfile` to build the Docker image and container.
 
 ```mermaid
 flowchart LR
-    A[HTTP client] <--> B
-    subgraph " "
-        B[HTTP server] <--> C[CA client]
+    CaClient --> Docker
+    subgraph Docker
+        direction LR
+        EPICS --> PVs
     end
-    C <--> D[CA server]
 ```
+
+The other approach uses caproto's CA server for the PVs as shown below.
+
+```mermaid
+flowchart LR
+    CaClient --> B["Caproto Server"] --> PVs
+```
+
+Both approaches can be implemented over HTTP using the `HttpClient` instead of the `CaClient`. See the comments in the examples for usage instructions.
+
+## Further reading
+
+See the links below for more information about EPICS and caproto.
+
+- [EPICS GitHub](https://github.com/epics-base/epics-base)
+- [EPICS website](https://epics-controls.org)
+- [EPICS documentation](https://docs.epics-controls.org)
+- [Caproto GitHub](https://github.com/caproto/caproto)
+- [Caproto documentation](https://caproto.github.io/caproto/)
