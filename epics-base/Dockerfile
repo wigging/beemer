@@ -19,7 +19,7 @@ RUN apk add --no-cache build-base readline-dev perl linux-headers wget \
     && tar -zxvf base-$epics_ver.tar.gz \
     && rm base-$epics_ver.tar.gz \
     && cd base-$epics_ver \
-    && make \
+    && make -j`nproc` \
     && apk del build-base perl linux-headers wget \
     && rm -rf test src templates startup modules html documentation include configure cfg db
 
@@ -27,7 +27,7 @@ ENV EPICS_BASE=/base-$epics_ver \
     EPICS_HOST_ARCH=linux-x86_64 \
     PATH=$PATH:/base-$epics_ver/bin/linux-x86_64
 
-COPY test.db .
+COPY thermocouple.db .
 
 EXPOSE 5065/tcp
 EXPOSE 5064/tcp
@@ -35,4 +35,4 @@ EXPOSE 5064/tcp
 EXPOSE 5065/udp
 EXPOSE 5064/udp
 
-CMD ["softIoc", "-d", "test.db"]
+CMD ["softIoc", "-d", "thermocouple.db"]

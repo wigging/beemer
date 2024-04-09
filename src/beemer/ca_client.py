@@ -1,8 +1,5 @@
 """
-A channel access (CA) client to communicate with a CA server.
-
-This requires the CA server to already be running. See the beemer/ca_servers
-directory for examples of channel access servers.
+A channel access (CA) client.
 """
 
 from caproto.threading.client import Context
@@ -15,6 +12,17 @@ class CaClient:
     def get_pv_values(self, *pvs: str) -> dict[str, object]:
         """
         Get values from PVs.
+
+        Parameters
+        ----------
+        pvs : tuple of str
+            One or more PV names.
+
+        Returns
+        -------
+        values : dict
+            Dictionary where each key is the PV name and its value is the PV
+            value.
         """
         values = {}
         pv_objects = self.ctx.get_pvs(*pvs)

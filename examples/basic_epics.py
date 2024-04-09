@@ -15,7 +15,7 @@ def main():
     Run this example.
     """
     client = CaClient()
-    values = client.get_pv_values("temperature:water")
+    values = client.get_pv_values("water", "air")
 
     for key, value in values.items():
         print(f"PV {key} value is {value}")

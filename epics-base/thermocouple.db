@@ -1,0 +1,13 @@
+record(ai, "water")
+{
+    field(DESC, "Water temperature in fish tank")
+    field(EGU, "F")
+    field(HIGH, 84)
+    field(LOW, 32)
+}
+
+record(ai, "air")
+{
+    field(DESC, "Ambient temperature")
+    field(EGU, "F")
+}
